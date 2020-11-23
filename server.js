@@ -38,6 +38,11 @@ function filterByQuery(query, animalsArray) {
     return filteredResults;
 }
 
+function findById(id, animalsArray) {
+    const result = animalsArray.filter(animal => animal.id === id)[0];
+    return result;
+  }
+
 
 app.get('/api/animals', (req, res) => {
     let results = animals;
@@ -47,10 +52,15 @@ app.get('/api/animals', (req, res) => {
     res.json(results);
 });
 
+app.get('/api/animals/:id', (req, res) => {
+    const result = findById(req.params.id, animals);
+      res.json(result);
+  });
+
 
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
-}) 
+  });
 
 
 
@@ -130,3 +140,8 @@ app.listen(PORT, () => {
 //     }
 // We're revising the filteredResults array for each trait that we loop through with .forEach(). Each iteration revises filteredResults so that it only contains animals that have all of the 
 // traits we are targeting. 
+
+
+// We have to pay extra attention to the order of the routes when we are working with mutiple. A param route must come after the other GET route. We could have used findbyQuery instead of 
+// findByID... but findById() will for certain return a single animal, because the id is unique. We also know that there won't be a query on a single animal, so there's no need for all 
+// that other code. 
