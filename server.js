@@ -4,6 +4,7 @@ const { animals } = require('./data/animals.json');
 const express = require('express');
 const PORT = process.env.PORT || 3001;
 const app = express();
+app.use(express.static('public'));
 //parse incoming string or array data 
 app.use(express.urlencoded({ extended: true }));
 //pase incoming JSON data
@@ -27,9 +28,9 @@ function filterByQuery(query, animalsArray) {
         // the trait, so at the end we'll have an array of aninmals that have every one
         personalityTraitsArray.forEach(trait => {
             filteredResults = filteredResults.filter(
-                animal => animal.personalityTraits.indexOf(trait) !== -1
+              animal => animal.personalityTraits.indexOf(trait) !== -1
             );
-        });
+          });
     }
 
     if (query.diet) {
@@ -79,6 +80,18 @@ function validateAnimal(animal) {
     return true;
 }
 
+// the '/' brings us to the root route of the server. 
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
+});
+
+app.get('/animals', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/animals.html'));
+});
+
+app.get('/zookeepers', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/zookeepers.html'));
+})
 
 app.get('/api/animals', (req, res) => {
     let results = animals;
@@ -301,3 +314,25 @@ app.listen(PORT, () => {
 // our server doesn't have any problems and we can understand their request, but they incorrectly made the request and we can't allow it to work. 
 // the line res.status().send() is a response method to relay a message to the client making the request. We send them an HTTP status code and a message explaning what went wrong. Anything
 // in the 400 range means that it's the user error and not a server error, and the message can help the user understand what went wrong on their end. 
+
+
+// app.get('/', (req, res) => {
+//     res.sendFile(path.join(__dirname, './public/index.html'));
+// })
+// This GET route has only one job to do, and that is to respond with an HTML page to display in the browser. So, instead of using res.json(), we're using res.sendFile(), and all we have to do 
+// is tell them where to find the file we want our server to read and send back to the client. 
+// Notice in the res.sendFile() we are using the path module again to ensure that we're finding the correct location for the HTML code we want to display in the browser. This way, we know
+// that it will work in any server enviornment. 
+
+// Before Express.js and its res.sendFile() method, the process for serving an HTML page was a little more manual. It involved using the fs module to locate and read the file's content, then
+// send it back to the client using the simpler res.send() method. all of this functionality is happening under the hood with res.sendFile(). 
+
+// Notice, when you start the server and locate to the webpage, the URL bar doesn't say anything about an index.html file. This is because we made a request to the server's route / and it 
+// responded with the HTML. In fact, we could've called the index.html file anything we wanted and it would still be the same URL. The file itself never gets to the browser- only its contents
+// do. 
+
+
+
+// app.use(express.static('public'));
+// ^ In this code, we added some more middleware to our server and used the express.static() method. The way it works is that we provide a file path to a location in our app and instruct
+// the server to make the files static resources. This means that all of our front-end code can now be accessed without having a specific serve endpoint created for it. 

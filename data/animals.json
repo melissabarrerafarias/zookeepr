@@ -129,6 +129,51 @@
         "hungry"
       ],
       "id": "13"
+    },
+    {
+      "name": "Larry",
+      "species": "Lemur",
+      "diet": "herbivore",
+      "personalityTraits": [
+        "hungry"
+      ],
+      "id": "14"
+    },
+    {
+      "name": "Harry",
+      "species": "Hippo",
+      "diet": "carnivore",
+      "personalityTraits": [
+        "hungry"
+      ],
+      "id": "15"
+    },
+    {
+      "name": "Lola",
+      "species": "Lizard",
+      "diet": "herbivore",
+      "personalityTraits": [
+        "anxious"
+      ],
+      "id": "16"
+    },
+    {
+      "name": "Jasmine",
+      "species": "Mantis",
+      "diet": "herbivore",
+      "personalityTraits": [
+        "loving"
+      ],
+      "id": "17"
+    },
+    {
+      "name": "Louis",
+      "species": "Kangaroo",
+      "diet": "herbivore",
+      "personalityTraits": [
+        "loving"
+      ],
+      "id": "18"
     }
   ]
 }
